@@ -1,4 +1,4 @@
-/* All valid credit card numbers
+ //All valid credit card numbers
 const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
 const valid2 = [5, 5, 3, 5, 7, 6, 6, 7, 6, 8, 7, 5, 1, 4, 3, 9];
 const valid3 = [3, 7, 1, 6, 1, 2, 0, 1, 9, 9, 8, 5, 2, 3, 6];
@@ -18,7 +18,7 @@ const mystery2 = [5, 4, 6, 6, 1, 0, 0, 8, 6, 1, 6, 2, 0, 2, 3, 9]; //valid
 const mystery3 = [6, 0, 1, 1, 3, 7, 7, 0, 2, 0, 9, 6, 2, 6, 5, 6, 2, 0, 3]; //invalid
 const mystery4 = [4, 9, 2, 9, 8, 7, 7, 1, 6, 9, 2, 1, 7, 0, 9, 3]; //invalid
 const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]; //valid
-*/
+
 
 //console.log(validateCred(mystery1));
 
@@ -30,56 +30,21 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]; //valid
  * VALIDATE CARD FUNCTION
  ****************************************/
 
-const validateCred = (arr) => {
-    //two arrays - doubleArr takes the doubled 'off numbers', singleArr takes the singled 'check numbers'
-    let doubleArr = [];
-    let singleArr = [];
-    //loop through every other starting one from back
-    for (let i = arr.length - 2; i >= 0; i -= 2) {
-        doubleArr.push(arr[i])
-    }
-    //loop through every other starting at back
-    for (let j = arr.length - 1; j >=0 ; j -= 2) {
-    singleArr.push(arr[j])
-    }
-    
-    //console.log(`singleArr is ${singleArr}`)
-    
-    //double every number in the doubleArr
-    doubleArr = doubleArr.map(x => x *2)
-    
-    // console.log(`doubled arr is ${doubleArr}`)
-    
-    //callback for checking is number is greater than 9, if so subtract 9
-    const check9 = (number) => {
-      if (number > 9) {
-        return number - 9
-      } else {
-        return number
-      }
-    }
-    
-    //map with the check9 callback
-    doubleArr = doubleArr.map(check9)
-    //console.log(`double Arr after minus 9 is ${doubleArr}`)
-    
-    //join two arrays
-    const finalArr = doubleArr.concat(singleArr);
+const validateCard = (arr) => {
+  let checkArr = []
 
-    //console.log(`final arr is ${finalArr}`)
-    
-    //reduce arrays to a sum
-    const checkSum = finalArr.reduce((acc, cv) => {
-      return acc + cv
-    },0)
-    
-    //check if the sum fits the rule checkSum % 10 === 0
-    if (checkSum % 10 === 0) {
-      return true
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if ((arr.length - 1 - i) % 2 === 1) {
+      if (arr[i] > 4) {
+        checkArr.push((arr[i] * 2) -9)
+      } else {
+        checkArr.push(arr[i])
+      }
     } else {
-      return false
+      checkArr.push(arr[i])
     }
-  
+  }
+  return checkArr
 }
 
 /*****************************************
@@ -89,7 +54,7 @@ const validateCred = (arr) => {
 let invalidCards = []
 const findInvalidCards = batch => {
   for (let b = 0; b < batch.length; b++) {
-    if (!validateCred(batch[b])) {
+    if (!validateCard(batch[b])) {
       invalidCards.push(batch[b])
     } else {
       null
@@ -125,3 +90,5 @@ const idInvalidCardCompanies = invalidCards => {
   const invalidCompaniesDuped = [...new Set(invalidCompanies)]
   return invalidCompaniesDuped
 }
+
+console.log(validateCard(valid1))
