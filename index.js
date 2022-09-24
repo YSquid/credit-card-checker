@@ -30,22 +30,20 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]; //valid
  * VALIDATE CARD FUNCTION
  ****************************************/
 
-const validateCard = (arr) => {
-  let checkArr = []
-
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if ((arr.length - 1 - i) % 2 === 1) {
-      if (arr[i] > 4) {
-        checkArr.push((arr[i] * 2) -9)
-      } else {
-        checkArr.push(arr[i])
+const validateCard = numArr => {
+  let total = 0;
+  for (let i = numArr.length - 1; i >= 0; i--) {
+    let currVal = numArr[i]
+    if((numArr.length - 1 - i) % 2 === 1) {
+      currVal *= 2;
+      if (currVal > 9) {
+        currVal -= 9;
       }
-    } else {
-      checkArr.push(arr[i])
     }
+    total += currVal
   }
-  return checkArr
-}
+  return total % 10 === 0
+}  
 
 /*****************************************
  * RETURN INVALID CARDS FUNCTION
