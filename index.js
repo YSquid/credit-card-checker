@@ -88,7 +88,12 @@ const idInvalidCardCompanies = invalidCards => {
   //using the Set Constructor to make a unique set of the array items
   const invalidCompaniesDuped = [...new Set(invalidCompanies)]
   return invalidCompaniesDuped
-}
 
-console.log(idInvalidCardCompanies(batch))
-console.log(idInvalidCardCompanies(invalidCards))
+  }
+
+  //Helper function to turn input of nums and put into array
+  const inputNums = (...args) => {
+    let cardNums = [...args]
+    return cardNums
+  }
+console.log(validateCard(inputNums(4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8)))
